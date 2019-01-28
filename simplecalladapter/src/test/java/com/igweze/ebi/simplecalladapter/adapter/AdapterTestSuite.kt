@@ -4,5 +4,5 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 @RunWith(Suite::class)
-@Suite.SuiteClasses(SimpleAdapterJavaTest::class, SimpleAdapterFactoryTest::class, SimpleAdapterTest::class)
+@Suite.SuiteClasses(SimpleAdapterJavaTest::class, SimpleCallAdapterFactoryTest::class, SimpleAdapterTest::class)
 class AdapterTestSuite

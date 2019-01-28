@@ -1,7 +1,8 @@
 package com.igweze.ebi.simplecalladapter.adapter;
 
 import com.igweze.ebi.simplecalladapter.Handler;
-import com.igweze.ebi.simplecalladapter.SimpleAdapterFactory;
+import com.igweze.ebi.simplecalladapter.SimpleCallAdapterFactory;
+import com.igweze.ebi.simplecalladapter.Subscription;
 
 import net.jodah.concurrentunit.Waiter;
 
@@ -10,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import okhttp3.HttpUrl;
@@ -36,7 +38,7 @@ public class SimpleAdapterJavaTest {
         HttpUrl url = mockServer.url("/");
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(new StringConverterFactory())
-                .addCallAdapterFactory(SimpleAdapterFactory.create())
+                .addCallAdapterFactory(SimpleCallAdapterFactory.create())
                 .baseUrl(url)
                 .build();
 
@@ -115,6 +117,30 @@ public class SimpleAdapterJavaTest {
         waiter.await(1000);
     }
 
+    @Test(expected = TimeoutException.class)
+    public void should_not_invoke_process_callback_when_subscription_is_disposed() throws TimeoutException, InterruptedException {
+        final Waiter waiter = new Waiter();
+
+        String msg = "some response";
+        MockResponse response = new MockResponse().setResponseCode(404).setBody(msg).setBodyDelay(2000, TimeUnit.MILLISECONDS);
+        mockServer.enqueue(response);
+
+        Subscription subscription = httpService.getPlace().process ((r, t) -> {
+                waiter.assertNotNull(r);
+            waiter.assertNull(t);
+             waiter.resume();
+        });
+
+        Thread.sleep(600);
+
+        // dispose subscription
+        subscription.dispose();
+
+        // this will throw expected exception
+        // because resume will never be called
+        // inside of 'process' callback
+        waiter.await(3000);
+    }
 
     @After
     public void tearDown() throws IOException {

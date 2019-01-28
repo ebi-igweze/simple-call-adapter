@@ -1,21 +1,18 @@
 package com.igweze.ebi.simplecalladapter.adapter
 
 import com.igweze.ebi.simplecalladapter.Simple
-import com.igweze.ebi.simplecalladapter.SimpleAdapterFactory
+import com.igweze.ebi.simplecalladapter.SimpleCallAdapterFactory
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
-import org.mockito.Mockito.mock
-import retrofit2.Call
-import java.lang.reflect.Method
 import java.lang.reflect.Type
 
-class SimpleAdapterFactoryTest {
+class SimpleCallAdapterFactoryTest {
 
     @Test
     fun `should return parameterized argument's type when responseType is called`() {
-        val factory = SimpleAdapterFactory.create()
+        val factory = SimpleCallAdapterFactory.create()
         val expectedType = String::class.java
         // mock generic return type from retrofit
         val anonymous = object {
@@ -31,7 +28,7 @@ class SimpleAdapterFactoryTest {
 
     @Test
     fun `should return null when type is not parameterized or generic`() {
-        val factory = SimpleAdapterFactory.create()
+        val factory = SimpleCallAdapterFactory.create()
 
         // mock non-generic return type from retrofit
         val anonymous = object {
@@ -47,7 +44,7 @@ class SimpleAdapterFactoryTest {
 
     @Test
     fun `should return null when enclosing generic type is not 'Simple'`() {
-        val factory = SimpleAdapterFactory.create()
+        val factory = SimpleCallAdapterFactory.create()
 
         // mock non-generic return type from retrofit
         val anonymous = object {

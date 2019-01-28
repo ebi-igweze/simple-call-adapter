@@ -1,6 +1,6 @@
 package com.igweze.ebi.simplecalladapter.adapter
 
-import com.igweze.ebi.simplecalladapter.SimpleAdapterFactory
+import com.igweze.ebi.simplecalladapter.SimpleCallAdapterFactory
 import net.jodah.concurrentunit.Waiter
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -10,6 +10,8 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 
 class SimpleAdapterTest {
@@ -24,7 +26,7 @@ class SimpleAdapterTest {
         val url = mockServer.url("/")
         val retrofit = Retrofit.Builder()
                 .addConverterFactory(StringConverterFactory())
-                .addCallAdapterFactory(SimpleAdapterFactory.create())
+                .addCallAdapterFactory(SimpleCallAdapterFactory.create())
                 .baseUrl(url)
                 .build()
 
@@ -98,6 +100,32 @@ class SimpleAdapterTest {
         }
 
         waiter.await(1000)
+    }
+
+
+    @Test(expected = TimeoutException::class)
+    fun `should not invoke 'process' callback when subscription is disposed`() {
+        val waiter = Waiter()
+
+        val msg = "some response"
+        val response = MockResponse().setResponseCode(404).setBody(msg).setBodyDelay(2000, TimeUnit.MILLISECONDS)
+        mockServer.enqueue(response)
+
+        val subscription = httpService.getPlace().process { r, t ->
+            waiter.assertNotNull(r)
+            waiter.assertNull(t)
+            waiter.resume()
+        }
+
+        Thread.sleep(600)
+
+        // dispose subscription
+        subscription.dispose()
+
+        // this will throw expected exception
+        // because resume will never be called
+        // inside of 'process' callback
+        waiter.await(3000)
     }
 
 
