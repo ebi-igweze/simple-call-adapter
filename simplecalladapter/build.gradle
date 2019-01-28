@@ -40,6 +40,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
+    testImplementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    testImplementation "net.jodah:concurrentunit:$concurrent_version"
 
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
