@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
-    private var users: List<User> = listOf()
+    private var users: List<Result> = listOf()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, type: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_user, viewGroup, false)
@@ -23,7 +23,7 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
         holder.bind(user)
     }
 
-    fun setUsers(users: List<User>) {
+    fun setUsers(users: List<Result>) {
         this.users = users
         notifyDataSetChanged()
     }
@@ -33,8 +33,8 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val tvUserName: TextView = view.findViewById(R.id.tvUserName)
 
-        fun bind(user: User) {
-            tvUserName.text = user.name
+        fun bind(result: Result) {
+            tvUserName.text = result.user.name.let { "${it.title}. ${it.first} ${it.last}" }
         }
     }
 }

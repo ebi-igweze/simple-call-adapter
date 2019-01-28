@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SimpleCallAdapterDemo</string>
+    <string name="action_go">go</string>
+    <string name="input_result_count">Input result count</string>
 </resources>

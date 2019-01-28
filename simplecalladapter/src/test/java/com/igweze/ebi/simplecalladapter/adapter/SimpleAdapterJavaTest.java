@@ -1,6 +1,6 @@
 package com.igweze.ebi.simplecalladapter.adapter;
 
-import com.igweze.ebi.simplecalladapter.Handler;
+import com.igweze.ebi.simplecalladapter.SimpleHandler;
 import com.igweze.ebi.simplecalladapter.SimpleCallAdapterFactory;
 import com.igweze.ebi.simplecalladapter.Subscription;
 
@@ -52,7 +52,7 @@ public class SimpleAdapterJavaTest {
         mockServer.enqueue(new MockResponse().setBody(sampleResponse));
 
         // issue request and check results
-        httpService.getName().run(new Handler<String>() {
+        httpService.getName().run(new SimpleHandler<String>() {
             @Override
             public void accept(String codeResponse, Throwable throwable) {
                 assertNull("an error occured", throwable);

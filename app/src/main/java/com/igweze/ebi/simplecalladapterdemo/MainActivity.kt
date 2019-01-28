@@ -2,6 +2,7 @@ package com.igweze.ebi.simplecalladapterdemo
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -9,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val adapter = UserAdapter()
+    private val service by lazy { Container.getServiceInstance() }
     private var resultCount = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,18 +23,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val service = Container.getServiceInstance()
-        service.getUsers(resultCount).process(::handleResponse).bind(this)
+        service.getUsers(resultCount).process(::handleResponse)//.bind(this)
     }
 
     private fun setupUI() {
+        btnGetResult.setOnClickListener {
+            val str = etResultCount.text.toString()
+            if (str.isNullOrEmpty()) return@setOnClickListener
+
+            resultCount = str.toInt()
+            service.getUsers(resultCount).process(::handleResponse)//.bind(this)
+        }
 
         // setup recycler view
         rvUsers.adapter = adapter
-        rvUsers.layoutManager = LinearLayoutManager(this)
+        val layoutManager =  LinearLayoutManager(this)
+        rvUsers.addItemDecoration(DividerItemDecoration(this, layoutManager.orientation))
+        rvUsers.layoutManager = layoutManager
     }
 
-    private fun handleResponse(response: Response<List<User>>?, throwable: Throwable?) {
+    private fun handleResponse(response: Response<List<Result>>?, throwable: Throwable?) {
         runOnUiThread {
             if (throwable != null) {
                 Toast.makeText(this, throwable.localizedMessage, Toast.LENGTH_LONG).show()

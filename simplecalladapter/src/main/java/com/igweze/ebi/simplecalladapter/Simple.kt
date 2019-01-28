@@ -11,8 +11,8 @@ class Simple<R>(private val call: Call<R>) {
     val subscription = Subscription()
 
     // support for java
-    fun run(responseHandler: Handler<R?>) = run(responseHandler::accept)
-    fun process(responseHandler: Handler<R?>) = process(responseHandler::accept)
+    fun run(responseHandler: SimpleHandler<R?>) = run(responseHandler::accept)
+    fun process(responseHandler: SimpleHandler<R?>) = process(responseHandler::accept)
 
 
     fun run(responseHandler: (response: R?, t: Throwable?) -> Unit) {
