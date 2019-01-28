@@ -15,6 +15,7 @@ class SimpleAdapterFactory private constructor() : CallAdapter.Factory() {
     }
 
     companion object {
+        @JvmStatic
         fun create() = SimpleAdapterFactory()
     }
 

@@ -1,7 +1,6 @@
 package com.igweze.ebi.simplecalladapter.adapter
 
 import com.igweze.ebi.simplecalladapter.SimpleAdapterFactory
-import com.nhaarman.mockitokotlin2.stub
 import net.jodah.concurrentunit.Waiter
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
