@@ -1,1 +1,1 @@
-include ':app', ':simplecalladapter'
+include ':app', ':simple-call-adapter'

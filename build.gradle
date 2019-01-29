@@ -9,6 +9,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,7 +32,38 @@ allprojects {
         mockito_version = '2.0.0'
         okhttp_version = '3.12.1'
         concurrent_version = '0.4.4'
+
+        // bintray & maven config
+        bintrayRepo = 'maven'
+        bintrayName = 'simple-call-adapter'
+
+        publishedGroupId = 'com.igweze.ebi'
+        libraryName = 'Simple Call Adapter'
+        artifact = 'simple-call-adapter' // This artifact name should be the same with library module name
+
+        libraryDescription = 'Simple call adpater for retrofit, helps collapse response Callback interface into one callback function for kotlin or a Functional interface for java.'
+
+        siteUrl = 'https://github.com/ebi-igweze/simple-call-adapter'
+        gitUrl = 'https://github.com/ebi-igweze/simple-call-adapter.git'
+
+        libraryVersion = '1.0.0'
+
+        developerId = 'your_id'
+        developerName = 'Ebi Igweze'
+        developerEmail = 'ebi.igweze@gmail.com'
+
+        // organization = 'your_organization' // if you push to organization's repository.
+        licenseName = 'The Apache Software License, Version 2.0'  //Example for license
+        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        allLicenses = ["Apache-2.0"]
+
+
+        bintray_user = System.getenv 'BINTRAY_USER'
+        bintray_apikey = System.getenv 'BINTRAY_KEY'
+        bintray_gpg_password = System.getenv 'GPG_PASS_PHRASE'
     }
+
+
 }
 
 task clean(type: Delete) {
