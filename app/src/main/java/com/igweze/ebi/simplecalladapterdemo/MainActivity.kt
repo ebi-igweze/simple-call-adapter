@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        service.getUsers(resultCount).process(::handleResponse)//.bind(this)
+        service.getUsers(resultCount).process(::handleResponse).bind(this)
     }
 
     private fun setupUI() {
