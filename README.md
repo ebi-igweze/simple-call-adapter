@@ -6,10 +6,13 @@ This is a simple adapter for retrofit responses. It is made to compose both erro
 
 
 ## Key Classes
-- Simple: This is a wrapper ``class`` that wraps the resulting response for the passed callback
-- Subscription: This is the ``class`` that wraps disposable results for asynchronus calls
-- SimpleCallAdapterFactory: This is a factory class for creating the call adapter for retrofit
-- SimpleCallAdapter: This is the retrofit adapter responsible for transforming the retrofit's ``Call`` interface into a ``Simple`` response
+
+| Class | Description |
+| ------ | ------ |
+| __Simple__ | This is a wrapper ``class`` that wraps the resulting response for the passed callback|
+| __Subscription__ | This is the ``class`` that wraps disposable results for asynchronus calls |
+| __SimpleCallAdapterFactory__ | This is a factory class for creating the call adapter for retrofit |
+| __SimpleCallAdapter__ | This is the retrofit adapter responsible for transforming the retrofit's ``Call`` interface into a ``Simple`` response |
 
 
 ## Setup
