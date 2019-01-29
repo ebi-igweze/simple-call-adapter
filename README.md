@@ -116,7 +116,7 @@ The call back also applies to java but you do it using the ``SimpleHandler`` fun
 
     // synchronous call
     // or for java <= 7
-    httpService.getUsers(4).run(new SimpleHandler<String>() {
+    httpService.getUsers(4).run(new SimpleHandler<List<User>>() {
         @Override
         public void accept(List<User> users, Throwable throwable) {
             // handle error or success response
