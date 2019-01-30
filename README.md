@@ -100,6 +100,29 @@ __Kotlin__
         // handle success
         users?.also { userList.add(it) }
     }
+
+    //...
+
+    // or you could do multiple calls to get the raw response
+    try {
+        // get the Response<UserInfo>
+        val userInfoResponse = httpService.getUserInfo().run()
+        if (userInfoResponse.isSuccessful) {
+            val userInfo = useInfoResponse.body()
+            val accountInfoResponse = httpService.getUserAccountInfo().run()
+            val user = if (accountInfoResponse.isSuccessful) {
+                val accountInfo = accountInfoResponse.body()
+                User(userInfo, accountInfo)
+            } else {
+                null
+            }
+
+            // do what you want with user
+        }
+
+    } catch(ex: IOException) {
+        // handle exception
+    }
 ```
 
 

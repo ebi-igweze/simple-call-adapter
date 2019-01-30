@@ -128,6 +128,21 @@ class SimpleAdapterTest {
         waiter.await(3000)
     }
 
+    @Test
+    fun `should return retrofit response`() {
+        val waiter = Waiter()
+
+        val msg = "some response"
+        val response = MockResponse().setBody(sampleResponse)
+        mockServer.enqueue(response)
+
+        // get the response
+        val responseString = httpService.getName().run()
+
+        // check assertion
+        assertEquals(sampleResponse, responseString.body())
+    }
+
 
     @After
     fun tearDown() {

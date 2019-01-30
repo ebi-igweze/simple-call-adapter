@@ -8,11 +8,12 @@ import java.io.IOException
 
 class Simple<R>(private val call: Call<R>) {
 
-    val subscription = Subscription()
-
     // support for java
     fun run(responseHandler: SimpleHandler<R?>) = run(responseHandler::accept)
     fun process(responseHandler: SimpleHandler<R?>) = process(responseHandler::accept)
+
+    @Throws(IOException::class)
+    fun run() = call.execute()
 
 
     fun run(responseHandler: (response: R?, t: Throwable?) -> Unit) {
@@ -29,6 +30,8 @@ class Simple<R>(private val call: Call<R>) {
 
     fun process(responseHandler: (response: R?, t: Throwable?) -> Unit): Subscription {
 
+        val subscription = Subscription()
+
         // define callback
         val callback = object : Callback<R> {
 
@@ -36,7 +39,9 @@ class Simple<R>(private val call: Call<R>) {
                 if (!subscription.isDisposed()) responseHandler(null, t)
             }
 
-            override fun onResponse(call: Call<R>?, response: Response<R>?) = handleResponse(response, responseHandler)
+            override fun onResponse(call: Call<R>?, response: Response<R>?) {
+                if (!subscription.isDisposed()) handleResponse(response, responseHandler)
+            }
 
         }
 
@@ -47,10 +52,6 @@ class Simple<R>(private val call: Call<R>) {
     }
 
     private fun handleResponse(response: Response<R>?, responseHandler: (R?, Throwable?) -> Unit) {
-        // return out of function if
-        // subscription is disposed
-        if (subscription.isDisposed()) return
-
         if (response?.isSuccessful == true) responseHandler(response.body(), null)
         else {
             if (response?.code() in 400..511) responseHandler(null, HttpException(response))
