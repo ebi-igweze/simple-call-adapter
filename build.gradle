@@ -46,7 +46,7 @@ allprojects {
         siteUrl = 'https://github.com/ebi-igweze/simple-call-adapter'
         gitUrl = 'https://github.com/ebi-igweze/simple-call-adapter.git'
 
-        libraryVersion = '1.0.0'
+        libraryVersion = '1.0.1'
 
         developerId = 'your_id'
         developerName = 'Ebi Igweze'
