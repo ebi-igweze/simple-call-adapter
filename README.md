@@ -2,7 +2,7 @@
 A simple adapter for retrofit 2
 
 ## Introduction
-This is a simple adapter for retrofit responses. It is made to compose both error and success response that will be passed into one callback and also provide cancellable subscriptions for asynchronous calls.
+This is a simple adapter for retrofit responses. It is made to compose both error and success response that will be passed into one callback and also provide cancellable subscriptions for asynchronous calls. You can read this [post](https://android.jlelse.eu/building-your-own-retrofit-call-adapter-b198169bab69) explaining the setup.
 
 
 ## Key Classes
@@ -10,7 +10,7 @@ This is a simple adapter for retrofit responses. It is made to compose both erro
 | Class | Description |
 | ------ | ------ |
 | __Simple__ | This is a wrapper ``class`` that wraps the resulting response for the passed callback|
-| __Subscription__ | This is the ``class`` that wraps disposable results for asynchronus calls |
+| __Subscription__ | This is the ``class`` that wraps disposable results for asynchronous calls |
 | __SimpleCallAdapterFactory__ | This is a factory class for creating the call adapter for retrofit |
 | __SimpleCallAdapter__ | This is the retrofit adapter responsible for transforming the retrofit's ``Call`` interface into a ``Simple`` response |
 
@@ -23,7 +23,7 @@ First, add the following to your ``repositories`` block
 
 then secondly, add this to your module level ``dependencies`` block
 ```groovy
-    implementation "com.igweze.ebi:simple-call-adapter:1.0.0"
+    implementation "com.igweze.ebi:simple-call-adapter:1.0.1"
 ```
 
 ## Usage
